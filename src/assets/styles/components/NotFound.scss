@@ -1,0 +1,38 @@
+.container404 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    min-height: calc(100vh - 150px);
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  .pulse {
+    animation-name: pulse;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+  }
+  
+  .container404 h1 {
+    color: white;
+    font-size: 60px;
+    margin: 10px;
+    animation-name: pulse;
+  }
+  
+  .container404 p {
+    color: white;
+    font-size: 20px;
+    margin: 0px;
+  }
+  
