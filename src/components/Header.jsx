@@ -1,7 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import gravatar from '../utils/gravatar';
+import { logoutRequest } from '../actions';
 import '../assets/styles/components/Header.scss';
 import logo from '../assets/static/logo-platzi-video-BW2.png';
 import userIcon from '../assets/static/user-icon.png';
@@ -10,6 +12,9 @@ import userIcon from '../assets/static/user-icon.png';
 const Header = props => {
     const { user } = props;
     const hasUser = Object.keys(user).length > 0;
+    const handleLogout = () => {
+        props.logoutRequest({});
+    };
     return (
         <header className="header">
             <Link to='/'>
@@ -24,11 +29,25 @@ const Header = props => {
                 <p>Perfil</p>
             </div>
             <ul>
-                <li><a href="/">Cuenta</a></li>
                 <li>
-                    <Link to='/login'>
-                    Iniciar sesion
-                    </Link>
+                    {hasUser ? 
+                        <a href="/">{user.name}</a>
+                        :
+                        null
+                    }
+                </li>
+                <li>
+                    {hasUser ? 
+                        <li>
+                            <a href="#logout" onClick={handleLogout}>
+                                Cerrar Sesion
+                            </a>
+                        </li>
+                        :
+                        <Link to='/login'>
+                            Iniciar sesion
+                        </Link>
+                    }
                 </li>
             </ul>
             </div>
@@ -36,10 +55,19 @@ const Header = props => {
     );
 }
 
+Header.prototype = {
+    user: PropTypes.object.isRequired,
+    logoutRequest: PropTypes.func.isRequired,
+}
+
 const mapStateToProps = state => {
     return{
         user: state.user,
     }
-}    
+};
 
-export default connect(mapStateToProps,null)(Header);
+const mapDispatchToProps = {
+    logoutRequest,
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(Header);
